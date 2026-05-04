@@ -29,7 +29,26 @@ function createWindow() {
   });
 }
 
+// Fix Google Login issue
+app.userAgentFallback = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+
+// Suppress libva hardware acceleration error on Linux
+app.disableHardwareAcceleration();
+
 app.whenReady().then(() => {
+  const { session } = require('electron');
+  
+  // Intercept headers to completely mask Electron
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+    
+    if (details.requestHeaders['sec-ch-ua']) {
+      details.requestHeaders['sec-ch-ua'] = '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"';
+    }
+    
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
+  });
+
   createWindow();
 
   app.on('activate', function () {
@@ -46,18 +65,13 @@ ipcMain.handle('create-tab', (event, { tabId, url }) => {
   const view = new WebContentsView({
     webPreferences: {
       nodeIntegration: false,
-      contextIsolation: true,
-      partition: `persist:${tabId}` // isolate sessions if needed or share them?
-      // actually, to share login, we should probably share the partition by AI, 
-      // but let's use default session for now so login persists across all tabs
+      contextIsolation: true
+      // Removed partition to use default session, ensuring login persists across all tabs
     }
   });
   
   views[tabId] = view;
   view.webContents.loadURL(url);
-  
-  // Set User-Agent if necessary, sometimes websites block electron
-  view.webContents.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
   return true;
 });

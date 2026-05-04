@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=HRMChat
+Exec=hrmchat %U
+Terminal=false
+Type=Application
+Icon=com.hrmchat.app
+StartupWMClass=HRMChat
+Comment=A unified multi-tab desktop app for AI
+Categories=Network;Utility;

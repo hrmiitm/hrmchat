@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.hrmchat.app</id>
+  <name>HRMChat</name>
+  <summary>A unified multi-tab desktop app for ChatGPT, Gemini, and Claude</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>ISC</project_license>
+  <developer_name>HRM IITM</developer_name>
+  <description>
+    <p>HRMChat is a unified multi-tab desktop app that allows you to chat with multiple AI models like ChatGPT, Gemini, Claude, and more from a single window. It supports tab persistence, multiple instances, and provides an integrated web experience natively on your desktop.</p>
+  </description>
+  <launchable type="desktop-id">com.hrmchat.app.desktop</launchable>
+  <url type="homepage">https://github.com/hrmiitm/hrmchat</url>
+  <url type="bugtracker">https://github.com/hrmiitm/hrmchat/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/hrmiitm/hrmchat/main/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0.0" date="2026-05-04">
+      <description>
+        <p>Initial release of HRMChat.</p>
+      </description>
+    </release>
+  </releases>
+</component>

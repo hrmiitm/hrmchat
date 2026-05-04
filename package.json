@@ -1,6 +1,6 @@
 {
   "name": "hrmchat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "HRMChat - A unified multi-tab desktop app for ChatGPT, Gemini, and Claude",
   "main": "main.js",
   "scripts": {
@@ -20,18 +20,34 @@
     "win": {
       "target": [
         "nsis",
-        "portable"
+        "appx"
       ]
+    },
+    "appx": {
+      "identityName": "hrmchat",
+      "publisher": "CN=hrmiitm",
+      "publisherDisplayName": "Hritik Roshan Maurya"
     },
     "linux": {
       "target": [
         "deb",
         "snap",
-        "AppImage"
+        "AppImage",
+        "tar.gz"
       ],
       "category": "Network",
       "executableArgs": [
-        "--no-sandbox"
+        "--no-sandbox",
+        "--ozone-platform=x11"
+      ]
+    },
+    "snap": {
+      "plugs": [
+        "default",
+        "network-manager",
+        "upower-observe",
+        "camera",
+        "audio-record"
       ]
     }
   },

@@ -15,3 +15,4 @@
 - [2026-05-04] Added electron-builder configuration to package the application into EXE, DEB, RPM, and SNAP.
 - [2026-05-04] Implemented persistent tabs feature using localStorage so sessions survive app restarts.
 - [2026-05-04] Updated .gitignore to exclude release outputs and logs.
+- [2026-05-05] Added --no-sandbox switch directly into main.js to fix packaged Linux app crashing natively.

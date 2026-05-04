@@ -37,6 +37,9 @@ app.userAgentFallback = FIREFOX_UA;
 // Suppress libva hardware acceleration error on Linux
 app.disableHardwareAcceleration();
 
+// Ensure the app runs without sandbox in packaged Linux environments (AppImage, Snap, Deb)
+app.commandLine.appendSwitch('no-sandbox');
+
 app.whenReady().then(() => {
   const { session } = require('electron');
   

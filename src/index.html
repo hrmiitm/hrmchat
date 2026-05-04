@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRMChat - AI Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>HRMChat</h2>
+      </div>
+      
+      <div class="ai-sections">
+        <!-- ChatGPT Section -->
+        <div class="ai-section" data-ai="chatgpt">
+          <div class="ai-header">
+            <span class="ai-title">ChatGPT</span>
+            <button class="new-tab-btn" data-url="https://chatgpt.com/">+</button>
+          </div>
+          <ul class="tab-list" id="chatgpt-tabs"></ul>
+        </div>
+
+        <!-- Gemini Section -->
+        <div class="ai-section" data-ai="gemini">
+          <div class="ai-header">
+            <span class="ai-title">Gemini</span>
+            <button class="new-tab-btn" data-url="https://gemini.google.com/">+</button>
+          </div>
+          <ul class="tab-list" id="gemini-tabs"></ul>
+        </div>
+
+        <!-- Claude Section -->
+        <div class="ai-section" data-ai="claude">
+          <div class="ai-header">
+            <span class="ai-title">Claude</span>
+            <button class="new-tab-btn" data-url="https://claude.ai/">+</button>
+          </div>
+          <ul class="tab-list" id="claude-tabs"></ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-bar">
+        <h3 id="current-tab-title">Select or create a chat</h3>
+      </header>
+      <!-- The WebContentsView will overlay here (x:250, y:50) -->
+      <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-card">
+          <h1>Welcome to HRMChat</h1>
+          <p>Your unified hub for ChatGPT, Gemini, and Claude.</p>
+          <p>Create a new tab from the sidebar to get started.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -11,3 +11,4 @@
 - [2026-05-04] Configured electron-builder for packaging into deb, snap, and exe.
 - [2026-05-04] Removed native OS window frame and implemented custom window controls (minimize, maximize, close) embedded within the top right of the application UI.
 - [2026-05-04] Added a global logout button to clear all session storage and cookies, effectively logging out of all AI services.
+- [2026-05-04] Added tab renaming functionality via double-click.

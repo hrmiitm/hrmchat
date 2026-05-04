@@ -120,6 +120,14 @@ body {
   flex: 1;
 }
 
+.tab-title[contenteditable="true"] {
+  cursor: text;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 4px;
+  border-radius: 4px;
+  outline: none;
+}
+
 .close-btn {
   background: none;
   border: none;

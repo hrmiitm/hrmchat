@@ -31,6 +31,32 @@ async function createTab(aiName, url) {
   const aiTitle = aiName.charAt(0).toUpperCase() + aiName.slice(1);
   span.textContent = `New ${aiTitle} Chat`;
   
+  // Tab Rename Feature: Double click to edit
+  span.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    span.contentEditable = "true";
+    span.focus();
+    document.execCommand('selectAll', false, null);
+  });
+  
+  span.addEventListener('blur', () => {
+    span.contentEditable = "false";
+    if (span.textContent.trim() === '') {
+      span.textContent = `New ${aiTitle} Chat`; // Fallback if empty
+    }
+    // Update top bar title if the renamed tab is currently active
+    if (activeTabId === tabId) {
+      currentTabTitle.textContent = span.textContent;
+    }
+  });
+  
+  span.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent adding new lines
+      span.blur();
+    }
+  });
+  
   const closeBtn = document.createElement('button');
   closeBtn.className = 'close-btn';
   closeBtn.innerHTML = '×';

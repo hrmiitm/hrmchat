@@ -39,6 +39,7 @@ app.disableHardwareAcceleration();
 
 // Ensure the app runs without sandbox in packaged Linux environments (AppImage, Snap, Deb)
 app.commandLine.appendSwitch('no-sandbox');
+app.commandLine.appendSwitch('lang', 'en-US');
 
 app.whenReady().then(() => {
   const { session } = require('electron');
@@ -46,6 +47,7 @@ app.whenReady().then(() => {
   // Intercept headers to completely mask Electron
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['User-Agent'] = FIREFOX_UA;
+    details.requestHeaders['Accept-Language'] = 'en-US,en;q=0.9';
     
     // Firefox does not send sec-ch-ua headers. If Electron adds them, Google will detect the mismatch!
     delete details.requestHeaders['sec-ch-ua'];

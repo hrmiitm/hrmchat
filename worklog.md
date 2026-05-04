@@ -20,3 +20,4 @@
 - [2026-05-05] Fixed tab renaming bug by stopping click propagation.
 - [2026-05-05] Added executableArgs to package.json to hardcode --no-sandbox into the Linux shortcut.
 - [2026-05-05] Added dynamic URL tracking for perfect tab persistence and added new AI models (Perplexity, Kimi, Minimax, Qwen).
+- [2026-05-05] Enforced en-US system language and Accept-Language headers to default Kimi and Qwen to English.

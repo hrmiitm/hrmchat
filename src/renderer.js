@@ -136,3 +136,13 @@ const closeAppBtn = document.getElementById('close-btn');
 if (minBtn) minBtn.addEventListener('click', () => window.electronAPI.windowMinimize());
 if (maxBtn) maxBtn.addEventListener('click', () => window.electronAPI.windowMaximize());
 if (closeAppBtn) closeAppBtn.addEventListener('click', () => window.electronAPI.windowClose());
+
+// --- Logout Control ---
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async () => {
+    if (confirm('Are you sure you want to clear all active sessions and log out?')) {
+      await window.electronAPI.logout();
+    }
+  });
+}

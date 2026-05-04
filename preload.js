@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   resizeSidebar: (width) => ipcRenderer.invoke('resize-sidebar', width),
   windowMinimize: () => ipcRenderer.invoke('window-minimize'),
   windowMaximize: () => ipcRenderer.invoke('window-maximize'),
-  windowClose: () => ipcRenderer.invoke('window-close')
+  windowClose: () => ipcRenderer.invoke('window-close'),
+  logout: () => ipcRenderer.invoke('logout')
 });

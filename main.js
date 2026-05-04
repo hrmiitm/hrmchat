@@ -168,3 +168,15 @@ ipcMain.handle('window-maximize', () => {
 ipcMain.handle('window-close', () => {
   if (mainWindow) mainWindow.close();
 });
+
+ipcMain.handle('logout', async () => {
+  const { session } = require('electron');
+  // Clear all storage data (cookies, local storage, etc.)
+  await session.defaultSession.clearStorageData();
+  
+  // Reload all active tabs to reflect the logged-out state
+  Object.values(views).forEach(view => {
+    view.webContents.reload();
+  });
+  return true;
+});

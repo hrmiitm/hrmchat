@@ -8,3 +8,4 @@
 - [2026-05-04] Switched User-Agent to Firefox and completely stripped Chromium sec-ch-ua headers to bypass Google login restrictions.
 - [2026-05-04] Fixed Gemini Google Auth by forcing accounts.google.com navigation into a dedicated BrowserWindow popup.
 - [2026-05-04] Made the sidebar resizable, implemented draggable bounds and IPC sync for views, and added smooth dropdown collapsers for AI sections.
+- [2026-05-04] Configured electron-builder for packaging into deb, snap, and exe.

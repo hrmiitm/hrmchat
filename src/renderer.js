@@ -15,7 +15,18 @@ document.querySelectorAll('.new-tab-btn').forEach(btn => {
   });
 });
 
-async function createTab(aiName, url) {
+function saveTabsState() {
+  const tabs = [];
+  document.querySelectorAll('.tab-item').forEach(tab => {
+    const aiName = tab.closest('.ai-section').dataset.ai;
+    const title = tab.querySelector('.tab-title').textContent;
+    const url = tab.dataset.url;
+    tabs.push({ aiName, title, url, isActive: activeTabId === tab.id });
+  });
+  localStorage.setItem('hrmchat-tabs', JSON.stringify(tabs));
+}
+
+async function createTab(aiName, url, restoreTitle = null, isActiveRestore = false, preventSave = false) {
   tabCounter++;
   const tabId = `tab-${tabCounter}`;
   const list = document.getElementById(`${aiName}-tabs`);
@@ -24,12 +35,13 @@ async function createTab(aiName, url) {
   const li = document.createElement('li');
   li.className = 'tab-item';
   li.id = tabId;
+  li.dataset.url = url;
   
   const span = document.createElement('span');
   span.className = 'tab-title';
   // Capitalize AI name
   const aiTitle = aiName.charAt(0).toUpperCase() + aiName.slice(1);
-  span.textContent = `New ${aiTitle} Chat`;
+  span.textContent = restoreTitle || `New ${aiTitle} Chat`;
   
   // Tab Rename Feature: Double click to edit
   span.addEventListener('dblclick', (e) => {
@@ -42,12 +54,13 @@ async function createTab(aiName, url) {
   span.addEventListener('blur', () => {
     span.contentEditable = "false";
     if (span.textContent.trim() === '') {
-      span.textContent = `New ${aiTitle} Chat`; // Fallback if empty
+      span.textContent = restoreTitle || `New ${aiTitle} Chat`; // Fallback if empty
     }
     // Update top bar title if the renamed tab is currently active
     if (activeTabId === tabId) {
       currentTabTitle.textContent = span.textContent;
     }
+    saveTabsState();
   });
   
   span.addEventListener('keydown', (e) => {
@@ -76,11 +89,14 @@ async function createTab(aiName, url) {
   // Call main process to create WebContentsView
   await window.electronAPI.createTab({ tabId, url });
   
-  // Automatically switch to it
-  switchTab(tabId, span.textContent);
+  if (!preventSave || isActiveRestore) {
+    switchTab(tabId, span.textContent, preventSave);
+  }
+  
+  if (!preventSave) saveTabsState();
 }
 
-async function switchTab(tabId, title) {
+async function switchTab(tabId, title, preventSave = false) {
   if (activeTabId) {
     const prevTab = document.getElementById(activeTabId);
     if (prevTab) prevTab.classList.remove('active');
@@ -94,6 +110,7 @@ async function switchTab(tabId, title) {
   welcomeScreen.style.display = 'none';
   
   await window.electronAPI.switchTab({ tabId });
+  if (!preventSave) saveTabsState();
 }
 
 async function closeTab(tabId) {
@@ -109,6 +126,7 @@ async function closeTab(tabId) {
     currentTabTitle.textContent = 'Select or create a chat';
     welcomeScreen.style.display = 'flex';
   }
+  saveTabsState();
 }
 
 // --- Dropdown Logic ---
@@ -168,7 +186,25 @@ const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', async () => {
     if (confirm('Are you sure you want to clear all active sessions and log out?')) {
+      localStorage.removeItem('hrmchat-tabs'); // Also clear tabs state
       await window.electronAPI.logout();
     }
   });
 }
+
+// --- Restore Session ---
+function loadTabsState() {
+  const saved = localStorage.getItem('hrmchat-tabs');
+  if (saved) {
+    try {
+      const tabs = JSON.parse(saved);
+      tabs.forEach(tab => {
+        createTab(tab.aiName, tab.url, tab.title, tab.isActive, true);
+      });
+    } catch (e) {
+      console.error('Failed to parse tabs state', e);
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadTabsState);

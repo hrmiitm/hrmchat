@@ -1,7 +1,7 @@
 {
   "name": "hrmchat",
   "version": "1.0.0",
-  "description": "",
+  "description": "HRMChat - A unified multi-tab desktop app for ChatGPT, Gemini, and Claude",
   "main": "main.js",
   "scripts": {
     "start": "electron . --no-sandbox",
@@ -38,7 +38,7 @@
     "url": "git+https://github.com/hrmiitm/hrmchat.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "HRM IITM",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {

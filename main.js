@@ -68,11 +68,48 @@ ipcMain.handle('create-tab', (event, { tabId, url }) => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true
-      // Removed partition to use default session, ensuring login persists across all tabs
     }
   });
   
   views[tabId] = view;
+
+  // Fix: Force Gemini's Google Login to happen in a popup window
+  // Google Auth trusts distinct popup windows more than embedded views
+  view.webContents.on('will-navigate', (e, navUrl) => {
+    if (navUrl.startsWith('https://accounts.google.com/') && url.includes('gemini.google.com')) {
+      e.preventDefault();
+      
+      const loginWin = new BrowserWindow({
+        width: 600,
+        height: 800,
+        title: 'Sign in to Google',
+        webPreferences: {
+          nodeIntegration: false,
+          contextIsolation: true
+        }
+      });
+      
+      // Remove menu bar for cleaner popup
+      loginWin.setMenuBarVisibility(false);
+      loginWin.loadURL(navUrl);
+      
+      // Watch for the redirect back to Gemini
+      loginWin.webContents.on('will-navigate', (e2, returnUrl) => {
+        if (returnUrl.startsWith('https://gemini.google.com/')) {
+          e2.preventDefault();
+          loginWin.close();
+          // Load the authenticated session back into the main tab!
+          view.webContents.loadURL(returnUrl);
+        }
+      });
+    }
+  });
+
+  // Ensure 'window.open' (used by Claude/ChatGPT for login) opens properly
+  view.webContents.setWindowOpenHandler(({ url: newUrl }) => {
+    return { action: 'allow' };
+  });
+
   view.webContents.loadURL(url);
 
   return true;

@@ -6,3 +6,4 @@
 - [2026-05-04] Created documentation files (`plan.md`, `structure.md`, `agent.md`, `worklog.md`).
 - [2026-05-04] Fixed Google login issue by spoofing sec-ch-ua headers and disabling hardware acceleration.
 - [2026-05-04] Switched User-Agent to Firefox and completely stripped Chromium sec-ch-ua headers to bypass Google login restrictions.
+- [2026-05-04] Fixed Gemini Google Auth by forcing accounts.google.com navigation into a dedicated BrowserWindow popup.

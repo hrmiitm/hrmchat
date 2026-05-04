@@ -1,4 +1,25 @@
+# Dependencies
 node_modules/
+
+# OS Files
 .DS_Store
+Thumbs.db
+
+# Build & Release outputs
 dist/
 build/
+release/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

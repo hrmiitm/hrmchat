@@ -14,3 +14,4 @@
 - [2026-05-04] Added tab renaming functionality via double-click.
 - [2026-05-04] Added electron-builder configuration to package the application into EXE, DEB, RPM, and SNAP.
 - [2026-05-04] Implemented persistent tabs feature using localStorage so sessions survive app restarts.
+- [2026-05-04] Updated .gitignore to exclude release outputs and logs.

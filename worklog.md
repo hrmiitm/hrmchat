@@ -17,3 +17,4 @@
 - [2026-05-04] Updated .gitignore to exclude release outputs and logs.
 - [2026-05-05] Added --no-sandbox switch directly into main.js to fix packaged Linux app crashing natively.
 - [2026-05-05] Removed RPM from default Linux targets to prevent rpmbuild missing errors on Ubuntu.
+- [2026-05-05] Fixed tab renaming bug by stopping click propagation.

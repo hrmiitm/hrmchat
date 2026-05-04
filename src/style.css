@@ -126,6 +126,8 @@ body {
   padding: 0 4px;
   border-radius: 4px;
   outline: none;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .close-btn {

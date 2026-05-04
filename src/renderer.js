@@ -51,6 +51,12 @@ async function createTab(aiName, url, restoreTitle = null, isActiveRestore = fal
     document.execCommand('selectAll', false, null);
   });
   
+  span.addEventListener('click', (e) => {
+    if (span.contentEditable === "true") {
+      e.stopPropagation();
+    }
+  });
+  
   span.addEventListener('blur', () => {
     span.contentEditable = "false";
     if (span.textContent.trim() === '') {

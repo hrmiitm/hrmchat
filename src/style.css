@@ -42,6 +42,7 @@ body {
   padding: 0 20px;
   border-bottom: 1px solid var(--border-color);
   background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  -webkit-app-region: drag;
 }
 
 .sidebar-header h2 {
@@ -150,7 +151,9 @@ body {
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
+  -webkit-app-region: drag;
 }
 
 .top-bar h3 {
@@ -238,4 +241,36 @@ body {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
+}
+
+/* Window Controls */
+.window-controls {
+  display: flex;
+  gap: 5px;
+  -webkit-app-region: no-drag;
+}
+
+.win-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.win-btn:hover {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+
+.win-btn.close:hover {
+  background-color: #ff4757;
+  color: white;
 }

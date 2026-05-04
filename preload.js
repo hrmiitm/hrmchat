@@ -4,5 +4,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createTab: (options) => ipcRenderer.invoke('create-tab', options),
   switchTab: (options) => ipcRenderer.invoke('switch-tab', options),
   closeTab: (options) => ipcRenderer.invoke('close-tab', options),
-  resizeSidebar: (width) => ipcRenderer.invoke('resize-sidebar', width)
+  resizeSidebar: (width) => ipcRenderer.invoke('resize-sidebar', width),
+  windowMinimize: () => ipcRenderer.invoke('window-minimize'),
+  windowMaximize: () => ipcRenderer.invoke('window-maximize'),
+  windowClose: () => ipcRenderer.invoke('window-close')
 });

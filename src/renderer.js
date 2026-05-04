@@ -127,3 +127,12 @@ document.addEventListener('mouseup', () => {
     document.body.style.cursor = 'default';
   }
 });
+
+// --- Window Controls ---
+const minBtn = document.getElementById('min-btn');
+const maxBtn = document.getElementById('max-btn');
+const closeAppBtn = document.getElementById('close-btn');
+
+if (minBtn) minBtn.addEventListener('click', () => window.electronAPI.windowMinimize());
+if (maxBtn) maxBtn.addEventListener('click', () => window.electronAPI.windowMaximize());
+if (closeAppBtn) closeAppBtn.addEventListener('click', () => window.electronAPI.windowClose());

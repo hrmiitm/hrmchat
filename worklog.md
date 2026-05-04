@@ -9,3 +9,4 @@
 - [2026-05-04] Fixed Gemini Google Auth by forcing accounts.google.com navigation into a dedicated BrowserWindow popup.
 - [2026-05-04] Made the sidebar resizable, implemented draggable bounds and IPC sync for views, and added smooth dropdown collapsers for AI sections.
 - [2026-05-04] Configured electron-builder for packaging into deb, snap, and exe.
+- [2026-05-04] Removed native OS window frame and implemented custom window controls (minimize, maximize, close) embedded within the top right of the application UI.

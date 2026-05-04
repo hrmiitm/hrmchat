@@ -116,6 +116,18 @@ ipcMain.handle('create-tab', (event, { tabId, url }) => {
 
   view.webContents.loadURL(url);
 
+  view.webContents.on('did-navigate', (e, navUrl) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('tab-url-updated', { tabId, url: navUrl });
+    }
+  });
+
+  view.webContents.on('did-navigate-in-page', (e, navUrl) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('tab-url-updated', { tabId, url: navUrl });
+    }
+  });
+
   return true;
 });
 

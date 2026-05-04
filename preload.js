@@ -8,5 +8,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   windowMinimize: () => ipcRenderer.invoke('window-minimize'),
   windowMaximize: () => ipcRenderer.invoke('window-maximize'),
   windowClose: () => ipcRenderer.invoke('window-close'),
-  logout: () => ipcRenderer.invoke('logout')
+  logout: () => ipcRenderer.invoke('logout'),
+  onTabUrlUpdated: (callback) => ipcRenderer.on('tab-url-updated', callback)
 });

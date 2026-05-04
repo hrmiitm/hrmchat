@@ -213,4 +213,16 @@ function loadTabsState() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', loadTabsState);
+window.addEventListener('DOMContentLoaded', () => {
+  loadTabsState();
+  
+  if (window.electronAPI && window.electronAPI.onTabUrlUpdated) {
+    window.electronAPI.onTabUrlUpdated((event, { tabId, url }) => {
+      const tab = document.getElementById(tabId);
+      if (tab) {
+        tab.dataset.url = url;
+        saveTabsState();
+      }
+    });
+  }
+});

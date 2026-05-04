@@ -29,8 +29,9 @@ function createWindow() {
   });
 }
 
-// Fix Google Login issue
-app.userAgentFallback = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+// Fix Google Login issue using Firefox User-Agent to bypass strict Chromium checks
+const FIREFOX_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0';
+app.userAgentFallback = FIREFOX_UA;
 
 // Suppress libva hardware acceleration error on Linux
 app.disableHardwareAcceleration();
@@ -40,11 +41,12 @@ app.whenReady().then(() => {
   
   // Intercept headers to completely mask Electron
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+    details.requestHeaders['User-Agent'] = FIREFOX_UA;
     
-    if (details.requestHeaders['sec-ch-ua']) {
-      details.requestHeaders['sec-ch-ua'] = '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"';
-    }
+    // Firefox does not send sec-ch-ua headers. If Electron adds them, Google will detect the mismatch!
+    delete details.requestHeaders['sec-ch-ua'];
+    delete details.requestHeaders['sec-ch-ua-mobile'];
+    delete details.requestHeaders['sec-ch-ua-platform'];
     
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });

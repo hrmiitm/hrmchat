@@ -38,7 +38,7 @@
     "url": "git+https://github.com/hrmiitm/hrmchat.git"
   },
   "keywords": [],
-  "author": "HRM IITM",
+  "author": "HRM IITM <admin@hrmiitm.com>",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {

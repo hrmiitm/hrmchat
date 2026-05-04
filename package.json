@@ -29,7 +29,10 @@
         "snap",
         "AppImage"
       ],
-      "category": "Network"
+      "category": "Network",
+      "executableArgs": [
+        "--no-sandbox"
+      ]
     }
   },
   "repository": {

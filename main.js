@@ -4,6 +4,7 @@ const path = require('path');
 let mainWindow;
 let views = {}; // Maps tabId to WebContentsView instance
 let currentTabId = null;
+let sidebarWidth = 250;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -21,10 +22,8 @@ function createWindow() {
   // Resize views when window resizes
   mainWindow.on('resize', () => {
     if (currentTabId && views[currentTabId]) {
-      const bounds = mainWindow.getBounds();
-      // Assume a top bar/sidebar takes some space. Let's say top bar is 50px high, and we use full width
-      // Actually, we'll get the exact layout from the UI later, but let's assume sidebar is 250px and top tab bar is 50px.
-      views[currentTabId].setBounds({ x: 250, y: 50, width: bounds.width - 250, height: bounds.height - 50 });
+      const bounds = mainWindow.getContentBounds();
+      views[currentTabId].setBounds({ x: sidebarWidth, y: 50, width: bounds.width - sidebarWidth, height: bounds.height - 50 });
     }
   });
 }
@@ -125,12 +124,17 @@ ipcMain.handle('switch-tab', (event, { tabId }) => {
   
   if (view) {
     mainWindow.contentView.addChildView(view);
-    const bounds = mainWindow.getBounds();
-    // In mac/linux, getting bounds of window includes title bar sometimes,
-    // getContentBounds is better.
     const contentBounds = mainWindow.getContentBounds();
-    // Layout: 250px left sidebar, 50px top header
-    view.setBounds({ x: 250, y: 50, width: contentBounds.width - 250, height: contentBounds.height - 50 });
+    view.setBounds({ x: sidebarWidth, y: 50, width: contentBounds.width - sidebarWidth, height: contentBounds.height - 50 });
+  }
+  return true;
+});
+
+ipcMain.handle('resize-sidebar', (event, newWidth) => {
+  sidebarWidth = newWidth;
+  if (currentTabId && views[currentTabId]) {
+    const contentBounds = mainWindow.getContentBounds();
+    views[currentTabId].setBounds({ x: sidebarWidth, y: 50, width: contentBounds.width - sidebarWidth, height: contentBounds.height - 50 });
   }
   return true;
 });

@@ -84,3 +84,46 @@ async function closeTab(tabId) {
     welcomeScreen.style.display = 'flex';
   }
 }
+
+// --- Dropdown Logic ---
+document.querySelectorAll('.ai-header').forEach(header => {
+  header.addEventListener('click', (e) => {
+    // Don't toggle if the user clicked the + button
+    if (e.target.classList.contains('new-tab-btn')) return;
+    
+    const section = header.closest('.ai-section');
+    section.classList.toggle('collapsed');
+  });
+});
+
+// --- Resizer Logic ---
+const resizer = document.getElementById('resizer');
+const sidebar = document.getElementById('sidebar');
+let isResizing = false;
+
+resizer.addEventListener('mousedown', (e) => {
+  isResizing = true;
+  resizer.classList.add('active');
+  document.body.style.cursor = 'col-resize';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isResizing) return;
+  
+  // Ensure sidebar width stays within reasonable bounds
+  let newWidth = e.clientX;
+  if (newWidth < 150) newWidth = 150;
+  if (newWidth > 600) newWidth = 600;
+  
+  sidebar.style.width = `${newWidth}px`;
+  
+  window.electronAPI.resizeSidebar(newWidth);
+});
+
+document.addEventListener('mouseup', () => {
+  if (isResizing) {
+    isResizing = false;
+    resizer.classList.remove('active');
+    document.body.style.cursor = 'default';
+  }
+});

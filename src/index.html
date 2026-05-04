@@ -9,7 +9,7 @@
 <body>
   <div class="app-container">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>HRMChat</h2>
       </div>
@@ -17,7 +17,8 @@
       <div class="ai-sections">
         <!-- ChatGPT Section -->
         <div class="ai-section" data-ai="chatgpt">
-          <div class="ai-header">
+          <div class="ai-header" title="Toggle ChatGPT Tabs">
+            <span class="chevron">▼</span>
             <span class="ai-title">ChatGPT</span>
             <button class="new-tab-btn" data-url="https://chatgpt.com/">+</button>
           </div>
@@ -26,7 +27,8 @@
 
         <!-- Gemini Section -->
         <div class="ai-section" data-ai="gemini">
-          <div class="ai-header">
+          <div class="ai-header" title="Toggle Gemini Tabs">
+            <span class="chevron">▼</span>
             <span class="ai-title">Gemini</span>
             <button class="new-tab-btn" data-url="https://gemini.google.com/">+</button>
           </div>
@@ -35,7 +37,8 @@
 
         <!-- Claude Section -->
         <div class="ai-section" data-ai="claude">
-          <div class="ai-header">
+          <div class="ai-header" title="Toggle Claude Tabs">
+            <span class="chevron">▼</span>
             <span class="ai-title">Claude</span>
             <button class="new-tab-btn" data-url="https://claude.ai/">+</button>
           </div>
@@ -43,6 +46,9 @@
         </div>
       </div>
     </aside>
+
+    <!-- Resizer Handle -->
+    <div class="resizer" id="resizer"></div>
 
     <!-- Main Content Area -->
     <main class="main-content">
